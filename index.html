@@ -827,6 +827,21 @@ button.rowbtn { width: 100%; text-align: left; }
 .note .sidecopy p { margin: 0 0 30px; }
 .note .sidecopy .k { display: block; margin-bottom: 8px; }
 
+/* private preview gate */
+body.locked .stage { visibility: hidden; }
+.gate { position: fixed; inset: 0; z-index: 50; display: none; align-items: center; justify-content: center; padding: 24px; background: var(--surface); }
+body.locked .gate { display: flex; }
+.gatecard { width: min(440px, 100%); background: var(--palette-powder); color: var(--palette-midnight); padding: 32px 32px 28px; border-radius: 4px; box-shadow: var(--shadow-panel); }
+.gatecard .ey { font-family: var(--font-mono); font-size: 11px; letter-spacing: .04em; text-transform: uppercase; margin: 0 0 10px; opacity: .8; }
+.gatecard h2 { font-family: var(--font-display); font-stretch: 62%; font-weight: 900; font-size: 34px; line-height: 1; text-transform: uppercase; margin: 0 0 14px; }
+.gatecard .gtext { font-size: 15px; line-height: 1.5; margin: 0 0 20px; }
+.gatefield { display: block; margin-bottom: 8px; }
+.gatefield span { display: block; font-family: var(--font-mono); font-size: 11px; letter-spacing: .03em; text-transform: uppercase; margin-bottom: 6px; opacity: .8; }
+.gatefield input { width: 100%; font: inherit; font-size: 16px; padding: 12px 14px; border: 1px solid var(--line-strong); border-radius: 4px; background: var(--palette-white); color: var(--palette-ink); outline: none; }
+.gatefield input:focus { border-color: var(--lp-blue); box-shadow: 0 0 0 3px rgba(0,71,187,.15); }
+.gateerr { min-height: 18px; font-family: var(--font-mono); font-size: 11px; letter-spacing: .03em; text-transform: uppercase; color: #B3261E; margin: 0 0 14px; }
+.gatecard .pill.primary { width: 100%; justify-content: center; }
+
 </style>
 </head>
 <body>
@@ -954,6 +969,16 @@ button.rowbtn { width: 100%; text-align: left; }
   </symbol>
 </defs>
 </svg>
+<div class="gate" id="gate">
+  <form class="gatecard" id="gateform" autocomplete="off">
+    <p class="ey">Private preview</p>
+    <h2>Lists in the Lonely Planet app</h2>
+    <p class="gtext">This concept demo is shared privately. Enter the preview password to continue.</p>
+    <label class="gatefield"><span>Password</span><input type="password" id="gatepw" placeholder="Enter password" autocomplete="off"></label>
+    <p class="gateerr" id="gateerr"></p>
+    <button class="pill primary" type="submit">Enter the demo →</button>
+  </form>
+</div>
 <div class="stage">
   <aside class="note">
     <p class="ey">Concept demo</p>
@@ -1887,6 +1912,20 @@ function fitPhone() {
   box.querySelector('.phone').style.transform = s < 1 ? `scale(${s})` : '';
 }
 window.addEventListener('resize', fitPhone); fitPhone();
+
+// private preview gate (same password as the website)
+(function () {
+  const KEY = 'lp-demo-preview';
+  let ok = false; try { ok = localStorage.getItem(KEY) === 'ok'; } catch (err) {}
+  if (!ok) { document.body.classList.add('locked'); setTimeout(() => { const i = document.getElementById('gatepw'); if (i) i.focus(); }, 50); }
+  const form = document.getElementById('gateform'); if (!form) return;
+  form.addEventListener('submit', (ev) => {
+    ev.preventDefault();
+    const v = (document.getElementById('gatepw').value || '').trim().toLowerCase().replace(/\s+/g, '');
+    if (v === 'lonelyplanet') { try { localStorage.setItem(KEY, 'ok'); } catch (err) {} document.body.classList.remove('locked'); fitPhone(); }
+    else { document.getElementById('gateerr').textContent = 'That password is not right'; document.getElementById('gatepw').select(); }
+  });
+})();
 
 </script>
 </body>
