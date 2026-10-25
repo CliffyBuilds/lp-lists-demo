@@ -878,6 +878,10 @@ body.locked { overflow: hidden; }
 
 .search { box-shadow: 0 1px 2px rgba(31,37,40,.06), 0 2px 6px rgba(31,37,40,.06); }
 
+.listtile .cover.globecover { background: var(--been); display: grid; place-items: center; }
+.listtile .cover.globecover .stamp { width: 72px; height: 72px; }
+.listtile .cover.globecover .stamp svg { width: 62px; height: 62px; mix-blend-mode: multiply; }
+
 </style>
 </head>
 <body>
@@ -1400,7 +1404,7 @@ function screenGuides() {
   ${SEARCH('Start your adventure')}
   <div class="rowhead" style="margin-top:22px"><h3 class="h3">Our Lists</h3><span class="mono muted" style="font-size:10px">New</span></div>
   <div class="pad" style="margin-top:10px; display:grid; gap:10px">
-    <button class="listtile" data-go="#list/map"><div class="cover bookcover"><img src="img/stamps-collage.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="body"><div class="ey">Lonely Planet's</div><div class="t">Ultimate Travel List</div><div class="m">${c.been} / 500 places</div>${ruler()}</div></button>
+    <button class="listtile" data-go="#list/map"><div class="cover globecover"><div class="stamp" style="background:var(--palette-lagoon)"><svg viewBox="0 0 100 100"><use href="#s-globe"/></svg></div></div><div class="body"><div class="ey">Lonely Planet's</div><div class="t">Ultimate Travel List</div><div class="m">${c.been} / 500 places</div>${ruler()}</div></button>
     <button class="listtile addbook" data-go="#books"><div class="cover fan"><span class="bk" style="background:var(--palette-rose)"><i>Best in<br>Travel</i></span><span class="bk" style="background:var(--palette-sage)"><i>Epic<br>Hikes</i></span><span class="bk" style="background:var(--lp-blue); color:var(--palette-white)"><i>Ultimate<br>Eatlist</i></span></div><div class="body"><div class="ey">Got another book?</div><div class="t">Add a list book</div><div class="m">Find it, enter the code inside the cover ${ICON.arrow}</div></div></button>
   </div>
   <div class="rowhead" style="margin-top:26px"><h3 class="h3">Our Guides</h3><button class="pill secondary" data-toast="Their existing filter">Filter ▾</button></div>
