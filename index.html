@@ -1398,7 +1398,7 @@ function screenGuides() {
   ${SEARCH('Start your adventure')}
   <div class="rowhead" style="margin-top:22px"><h3 class="h3">Our Lists</h3><span class="mono muted" style="font-size:10px">New</span></div>
   <div class="pad" style="margin-top:10px; display:grid; gap:10px">
-    <button class="listtile" data-go="#list/map"><div class="cover bookcover"><img src="img/stamps-collage.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="lp">Lonely Planet</span><span class="ttl">Ultimate<br>Travel<br>List</span></div><div class="body"><div class="ey">Lonely Planet's</div><div class="t">Ultimate Travel List</div><div class="m">500 places · ${c.been} been</div>${ruler()}</div></button>
+    <button class="listtile" data-go="#list/map"><div class="cover bookcover"><img src="img/stamps-collage.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="ttl">Ultimate<br>Travel<br>List</span></div><div class="body"><div class="ey">Lonely Planet's</div><div class="t">Ultimate Travel List</div><div class="m">500 places · ${c.been} been</div>${ruler()}</div></button>
     <button class="listtile addbook" data-go="#books"><div class="cover fan"><span class="bk" style="background:var(--palette-rose)"><i>Best in<br>Travel</i></span><span class="bk" style="background:var(--palette-sage)"><i>Epic<br>Hikes</i></span><span class="bk" style="background:var(--lp-blue); color:var(--palette-white)"><i>Ultimate<br>Eatlist</i></span></div><div class="body"><div class="ey">Got another book?</div><div class="t">Add a list book</div><div class="m">Find it, enter the code inside the cover ${ICON.arrow}</div></div></button>
   </div>
   <div class="rowhead" style="margin-top:26px"><h3 class="h3">Our Guides</h3><button class="pill secondary" data-toast="Their existing filter">Filter ▾</button></div>
@@ -1535,7 +1535,7 @@ function screenFavorites() {
   ${SEARCH('Search destinations and things to do')}
   <div class="collections">
     <button class="coll" data-toast="Their existing collection">${photoBlock('sagrada')}<div class="t">All favorites</div><div class="m">${hearts} items</div></button>
-    <button class="coll fromlist" data-go="#list/map" data-setstate="wishlist"><div class="photo real coverlabel"><img src="${PHOTO_BASE}stamps-collage.jpg" alt="" loading="lazy" style="object-position:center 40%" onerror="this.remove()"><span class="lp">Lonely Planet's</span><span class="ttl">Ultimate Travel List</span></div><div class="t">Ultimate Travel List</div><div class="m">${listed.length} of ${hearts} favorites</div></button>
+    <button class="coll fromlist" data-go="#list/map" data-setstate="wishlist"><div class="photo real coverlabel"><img src="${PHOTO_BASE}stamps-collage.jpg" alt="" loading="lazy" style="object-position:center 40%" onerror="this.remove()"><span class="ttl">Ultimate Travel List</span></div><div class="t">Ultimate Travel List</div><div class="m">${listed.length} of ${hearts} favorites</div></button>
     ${S.lists['best-in-travel-2027'] ? `<button class="coll fromlist" data-toast="Concept: favorites from that list">${photoBlock('cappadocia')}<div class="t">Best in Travel 2027</div><div class="m">0 favorites</div></button>` : ''}
     <button class="coll" data-toast="Their existing collection">${photoBlock('rome-trastevere')}<div class="t">Italy 2026</div><div class="m">6 items</div></button>
   </div>
