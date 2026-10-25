@@ -781,6 +781,30 @@ button.rowbtn { width: 100%; text-align: left; }
 .pill.chip.cchip .n { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
 .pill.chip.cchip.more { background: transparent; border-style: dashed; color: var(--text-muted); }
 
+/* landscape layout: copy | phone | walk through */
+.stage { grid-template-columns: minmax(260px, 400px) auto minmax(260px, 400px); justify-content: center; align-items: start; gap: 40px; padding: 28px 32px; max-width: 1500px; margin: 0 auto; }
+.note { max-width: none; justify-self: end; }
+.note .sidecopy { margin-top: 14px; font-size: 14px; }
+.note h1 { font-size: 40px; }
+.walkcol { justify-self: start; max-width: 400px; position: sticky; top: 28px; }
+.walkcol .walkhead { font-family: var(--font-mono); font-size: 11px; letter-spacing: .03em; text-transform: uppercase; color: var(--text); margin: 0 0 8px; }
+.phonebox { position: sticky; top: 28px; width: 390px; height: 844px; }
+.phonebox .phone { position: static; transform-origin: top left; }
+@media (max-width: 1180px) {
+  .stage { grid-template-columns: minmax(240px, 1fr) auto; }
+  .walkcol { grid-column: 1; grid-row: 2; position: static; max-width: none; justify-self: stretch; }
+  .note { justify-self: stretch; }
+}
+@media (max-width: 820px) {
+  .stage { grid-template-columns: 1fr; padding: 16px 12px; }
+  .phonebox { position: static; justify-self: center; }
+  .walkcol { grid-row: auto; }
+}
+
+.walkcol { max-height: calc(100vh - 56px); overflow-y: auto; scrollbar-width: none; padding-right: 4px; }
+.walkcol::-webkit-scrollbar { display: none; }
+@media (max-width: 1180px) { .walkcol { max-height: none; overflow: visible; } }
+
 </style>
 </head>
 <body>
@@ -917,22 +941,9 @@ button.rowbtn { width: 100%; text-align: left; }
     <p><span class="k">How it fits in with your current app</span><br>Lists sit under Guides next to your city guides. Each list has three tabs: the list, your passport and the community. Every place page gets one new option alongside the heart and Add to trip: Been, with a date and a rating. City guides get the same for their top sights.</p>
     <p><span class="k">About this page</span><br>Click through the app to see a rough demo of how this could look in your app. It uses sample data; <a href="#" id="reset">reset the demo</a> to start again.</p>
     </div>
-    <p class="k walkhead">Suggested walk through</p>
-    <ol class="walk" id="jump">
-      <li><button class="step" data-go="#discover"><div><b>Discover</b><span>One new card, Tick off the Ultimate Travel List, among the cards you already have. Nothing else on the home screen changes.</span></div></button></li>
-      <li><button class="step" data-go="#guides"><div><b>Guides</b><span>Our Lists sits above Our Guides. The book lives here, with a tile to add another list book by its code.</span></div></button></li>
-      <li><button class="step" data-go="#code/best-in-travel-2027"><div><b>Book code</b><span>Unlock a list with the code printed inside the front cover of the book.</span></div></button></li>
-      <li><button class="step" data-go="#list/map"><div><b>The list</b><span>Map and ranked list in one tab. Filter by your places, continent, country or type. Dots and stamps use the same colours as everywhere else.</span></div></button></li>
-      <li><button class="step" data-go="#list/passport"><div><b>Passport</b><span>Your count of 500, the ruler, badges in four categories, and a grid of the stamps you have earned.</span></div></button></li>
-      <li><button class="step" data-go="#list/community"><div><b>Community</b><span>Your tier against everyone on the list, your friends and their tiers, the top travellers and the highest rated places.</span></div></button></li>
-      <li><button class="step" data-go="#friend/dad"><div><b>A friend</b><span>A friend's passport: where they have been, what they are planning and what is on their wishlist, next to yours.</span></div></button></li>
-      <li><button class="step" data-go="#place/giza"><div><b>A place</b><span>The square at the top shows the state. Tap it for wishlist, planning or been. Say how keen you are before, rate it after.</span></div></button></li>
-      <li><button class="step" data-go="#trip/aberdeen"><div><b>A trip</b><span>Your existing trip page, plus one card at the end: trip over, mark every stop as Been in one go.</span></div></button></li>
-      <li><button class="step" data-go="#favorites"><div><b>Favorites</b><span>Favorites from the list are collected for you as a collection, still part of All favorites.</span></div></button></li>
-    </ol>
   </aside>
 
-  <div class="phone">
+  <div class="phonebox"><div class="phone">
     <div class="screen">
       <header class="statusbar"><span>9:41</span><span class="notch"></span><span>5G ▮▮▮</span></header>
       <main id="view"></main>
@@ -948,8 +959,23 @@ button.rowbtn { width: 100%; text-align: left; }
       <div class="toast" id="toast"></div>
       <div class="popup" id="popup" data-popclose></div>
     </div>
-  </div>
+  </div></div>
 
+  <aside class="walkcol">
+    <p class="k walkhead">Suggested walk through</p>
+    <ol class="walk" id="jump">
+      <li><button class="step" data-go="#discover"><div><b>Discover</b><span>One new card, Tick off the Ultimate Travel List, among the cards you already have. Nothing else on the home screen changes.</span></div></button></li>
+      <li><button class="step" data-go="#guides"><div><b>Guides</b><span>Our Lists sits above Our Guides. The book lives here, with a tile to add another list book by its code.</span></div></button></li>
+      <li><button class="step" data-go="#code/best-in-travel-2027"><div><b>Book code</b><span>Unlock a list with the code printed inside the front cover of the book.</span></div></button></li>
+      <li><button class="step" data-go="#list/map"><div><b>The list</b><span>Map and ranked list in one tab. Filter by your places, continent, country or type. Dots and stamps use the same colours as everywhere else.</span></div></button></li>
+      <li><button class="step" data-go="#list/passport"><div><b>Passport</b><span>Your count of 500, the ruler, badges in four categories, and a grid of the stamps you have earned.</span></div></button></li>
+      <li><button class="step" data-go="#list/community"><div><b>Community</b><span>Your tier against everyone on the list, your friends and their tiers, and the highest rated places.</span></div></button></li>
+      <li><button class="step" data-go="#friend/dad"><div><b>A friend</b><span>A friend's passport: where they have been, what they are planning and what is on their wishlist, next to yours.</span></div></button></li>
+      <li><button class="step" data-go="#place/giza"><div><b>A place</b><span>The square at the top shows the state. Tap it for wishlist, planning or been. Say how keen you are before, rate it after.</span></div></button></li>
+      <li><button class="step" data-go="#trip/aberdeen"><div><b>A trip</b><span>Your existing trip page, plus one card at the end: trip over, mark every stop as Been in one go.</span></div></button></li>
+      <li><button class="step" data-go="#favorites"><div><b>Favorites</b><span>Favorites from the list are collected for you as a collection, still part of All favorites.</span></div></button></li>
+    </ol>
+  </aside>
 </div>
 
 <script>
@@ -1829,6 +1855,16 @@ window.addEventListener('hashchange', () => { if (location.hash && location.hash
 
 current = location.hash && location.hash.length > 1 ? location.hash : '#discover';
 render(true);
+
+// scale the phone to fit the viewport height on desktop
+function fitPhone() {
+  const box = document.querySelector('.phonebox'); if (!box) return;
+  const avail = window.innerHeight - 56;
+  const s = Math.min(1, Math.max(0.55, avail / 844));
+  box.style.width = (390 * s) + 'px'; box.style.height = (844 * s) + 'px';
+  box.querySelector('.phone').style.transform = s < 1 ? `scale(${s})` : '';
+}
+window.addEventListener('resize', fitPhone); fitPhone();
 
 </script>
 </body>
