@@ -842,6 +842,22 @@ body.locked .gate { display: flex; }
 .gateerr { min-height: 18px; font-family: var(--font-mono); font-size: 11px; letter-spacing: .03em; text-transform: uppercase; color: #B3261E; margin: 0 0 14px; }
 .gatecard .pill.primary { width: 100%; justify-content: center; }
 
+/* private preview gate: matches ultimatetravellist.dev exactly */
+.gate { background: #F2F2F2; color: #1F2528; padding: 48px 16px; }
+.gatecard { width: 100%; max-width: 420px; background: #FFFFFF; padding: 32px; border-radius: 0; box-shadow: none; color: #1F2528; }
+.gatecard .gh1 { font-family: var(--font-display); font-stretch: 62%; font-weight: 900; font-size: 40px; line-height: 40px; text-transform: uppercase; margin: 0; color: #1F2528; }
+.gatecard .gp { font-family: var(--font-sans); font-size: 16px; line-height: 24px; color: #636363; margin: 12px 0 0; }
+.gatecard .gform { margin-top: 24px; display: grid; gap: 16px; }
+.gatecard .glabel { display: block; }
+.gatecard .glabel span { display: block; font-family: var(--font-mono); font-size: 12px; line-height: 14px; letter-spacing: .03em; text-transform: uppercase; color: #636363; margin-bottom: 6px; }
+.gatecard .glabel input { width: 100%; height: 48px; font-family: var(--font-sans); font-size: 16px; padding: 11px 14px; border: 1px solid #DCDBD8; border-radius: 4px; background: #FFFFFF; color: #1F2528; outline: none; }
+.gatecard .glabel input:focus { border-color: #0047BB; box-shadow: 0 0 0 1px #0047BB; }
+.gatecard .glabel input[aria-invalid="true"] { border-color: #B3261E; box-shadow: 0 0 0 1px #B3261E; }
+.gatecard .gbtn { width: 100%; height: 50px; padding: 12px 20px; border-radius: 999px; border: 1px solid transparent; font-family: var(--font-mono); font-size: 16px; font-weight: 400; letter-spacing: .04em; text-transform: uppercase; background: #1F2528; color: #FFFFFF; cursor: pointer; }
+.gatecard .gbtn:disabled { background: #DCDBD8; color: #636363; cursor: default; }
+.gatecard .gp2 { font-family: var(--font-sans); font-size: 14px; line-height: 1.45; color: #636363; margin: 24px 0 0; }
+.gatecard .gp2.err { color: #B3261E; }
+
 </style>
 </head>
 <body>
@@ -970,14 +986,15 @@ body.locked .gate { display: flex; }
 </defs>
 </svg>
 <div class="gate" id="gate">
-  <form class="gatecard" id="gateform" autocomplete="off">
-    <p class="ey">Private preview</p>
-    <h2>Lists in the Lonely Planet app</h2>
-    <p class="gtext">This concept demo is shared privately. Enter the preview password to continue.</p>
-    <label class="gatefield"><span>Password</span><input type="password" id="gatepw" placeholder="Enter password" autocomplete="off"></label>
-    <p class="gateerr" id="gateerr"></p>
-    <button class="pill primary" type="submit">Enter the demo →</button>
-  </form>
+  <div class="gatecard">
+    <h1 class="gh1">Private preview.</h1>
+    <p class="gp">This is a private prototype. Enter the access password to continue.</p>
+    <form class="gform" id="gateform" autocomplete="off">
+      <label for="gatepw" class="glabel"><span>Access password</span><input id="gatepw" type="password" autocomplete="current-password" placeholder="Access password" aria-invalid="false"></label>
+      <button type="submit" class="gbtn" id="gatebtn" disabled>Enter →</button>
+    </form>
+    <p class="gp2" id="gateerr">Don't have the password? Ask whoever shared this link with you.</p>
+  </div>
 </div>
 <div class="stage">
   <aside class="note">
@@ -1913,17 +1930,20 @@ function fitPhone() {
 }
 window.addEventListener('resize', fitPhone); fitPhone();
 
-// private preview gate (same password as the website)
+// private preview gate (same password and look as the website)
 (function () {
   const KEY = 'lp-demo-preview';
   let ok = false; try { ok = localStorage.getItem(KEY) === 'ok'; } catch (err) {}
-  if (!ok) { document.body.classList.add('locked'); setTimeout(() => { const i = document.getElementById('gatepw'); if (i) i.focus(); }, 50); }
   const form = document.getElementById('gateform'); if (!form) return;
+  const pw = document.getElementById('gatepw'), btn = document.getElementById('gatebtn'), msg = document.getElementById('gateerr');
+  const HINT = "Don't have the password? Ask whoever shared this link with you.";
+  if (!ok) { document.body.classList.add('locked'); setTimeout(() => pw.focus(), 50); }
+  pw.addEventListener('input', () => { btn.disabled = !pw.value.trim(); pw.setAttribute('aria-invalid', 'false'); msg.textContent = HINT; msg.classList.remove('err'); });
   form.addEventListener('submit', (ev) => {
     ev.preventDefault();
-    const v = (document.getElementById('gatepw').value || '').trim().toLowerCase().replace(/\s+/g, '');
+    const v = (pw.value || '').trim().toLowerCase().replace(/\s+/g, '');
     if (v === 'lonelyplanet') { try { localStorage.setItem(KEY, 'ok'); } catch (err) {} document.body.classList.remove('locked'); fitPhone(); }
-    else { document.getElementById('gateerr').textContent = 'That password is not right'; document.getElementById('gatepw').select(); }
+    else { pw.setAttribute('aria-invalid', 'true'); msg.textContent = 'That password is not right. Try again.'; msg.classList.add('err'); pw.select(); }
   });
 })();
 
